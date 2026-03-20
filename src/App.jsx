@@ -41,7 +41,7 @@ export default function App() {
   const fetchSatelliteData = async (year, layer = activeLayer) => {
     setIsLoadingMap(true);
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/v1/geo/map-layer?year=${year}&layer_type=${layer}`, {
+      const response = await axios.post(`https://terrametrics-api.onrender.com/api/v1/geo/map-layer?year=${year}&layer_type=${layer}`, {
         lon: position[1], 
         lat: position[0]  
       });
@@ -77,10 +77,10 @@ export default function App() {
 
     const fetchTelemetry = async () => {
       try {
-        const heatmapResponse = await axios.get('http://127.0.0.1:8000/api/v1/telemetry/pothole-heatmap');
+        const heatmapResponse = await axios.get('https://terrametrics-api.onrender.com/api/v1/telemetry/pothole-heatmap');
         setTelemetryData(heatmapResponse.data);
         
-        const vehicleResponse = await axios.get('http://127.0.0.1:8000/api/v1/telemetry/live-vehicle');
+        const vehicleResponse = await axios.get('https://terrametrics-api.onrender.com/api/v1/telemetry/live-vehicle');
         setVehiclePos([vehicleResponse.data.lat, vehicleResponse.data.lon]);
       } catch (error) {
         console.error("Error fetching telemetry:", error);
@@ -122,7 +122,7 @@ export default function App() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         try {
-          await axios.post('http://127.0.0.1:8000/api/v1/telemetry/manual-report', {
+          await axios.post('https://terrametrics-api.onrender.com/api/v1/telemetry/manual-report', {
             lat: position.coords.latitude,
             lon: position.coords.longitude,
             severity_score: 90.0
